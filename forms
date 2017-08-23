@@ -1,0 +1,50 @@
+<script
+    src="http://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous">
+</script>
+<form id="test">
+    <input type="text" name="first_name">
+    <br>
+    <br>
+    <input type="text" name="last_name">
+</form>
+
+<script>
+    var options = {
+        fields : {
+             0 : {
+                fieldSelector : 'input',
+                loggedAttr : 'value',
+                event : 'keyup'
+            }
+        }
+    };
+    var formField = new form_logger().init(options);
+
+
+    function form_logger() {
+        var _self = this;
+        this._options = {};
+        this._defaultOptions = {
+            fields : {}
+        };
+
+        this.init = function(options) {
+            var userOptions = typeof options === 'object' ? options : {};
+            _self.options = $.extend(_self._defaultOptions, userOptions);
+            _self._setEvents();
+        };
+
+        this._setEvents = function() {
+            $.each(_self.options.fields, function( index, settings ) {
+                $(document).on(settings.event, settings.fieldSelector, function() {
+                    console.log($(this).val());
+                });
+            });
+
+        }
+    }
+
+
+</script>
